@@ -1,5 +1,5 @@
 /*------------------------------------------------------*/
-/* Prog    : Tp2_IFT3205-2-1.c                          */
+/* Prog    : Tp2_IFT3205-2-6.c                          */
 /* Auteur  : Émilie Rufiange 208376                     */
 /* Date    : --/--/2010                                 */
 /* version :                                            */ 
@@ -23,8 +23,8 @@
 #define NAME_VISUALISER "display "
 #define NAME_IMG_IN1  "UdM_1"
 #define NAME_IMG_IN2  "UdM_2"
-#define NAME_IMG_OUT1 "image-TpIFT3205-2-1a"
-#define NAME_IMG_OUT2 "image-TpIFT3205-2-1b"
+#define NAME_IMG_OUT1 "image-Out1"
+#define NAME_IMG_OUT2 "image-Out2"
 
 /*------------------------------------------------*/
 /* PROTOTYPE DE FONCTIONS  -----------------------*/   
@@ -46,85 +46,28 @@ int main(int argc,char **argv)
   width=512;
   
   //Allocation Memoire 
-  float** MatriceImgI1=fmatrix_allocate_2d(length,width); //UdM_1-Imaginaire
-  float** MatriceImgM1=fmatrix_allocate_2d(length,width); //UdM_1-Module
-  float** MatriceImgR1=fmatrix_allocate_2d(length,width); //UdM_1-Réel
-  float** MatriceImgI2=fmatrix_allocate_2d(length,width); //UdM_2-Imaginaire
-  float** MatriceImgM2=fmatrix_allocate_2d(length,width); //UdM_2-Module
-  float** MatriceImgR2=fmatrix_allocate_2d(length,width); //UdM_2-Réel
+  float** MatriceImgI1=fmatrix_allocate_2d(length,width);
+  float** MatriceImgM1=fmatrix_allocate_2d(length,width);
+  float** MatriceImgR1=fmatrix_allocate_2d(length,width);
+  float** MatriceImgI2=fmatrix_allocate_2d(length,width);
+  float** MatriceImgM2=fmatrix_allocate_2d(length,width);
+  float** MatriceImgR2=fmatrix_allocate_2d(length,width);
   float** MatriceImgI3=fmatrix_allocate_2d(length,width);
   float** MatriceImgM3=fmatrix_allocate_2d(length,width);
   float** MatriceImgR3=fmatrix_allocate_2d(length,width);
   float** MatriceImg3=fmatrix_allocate_2d(length,width);
 
   //Lecture Image 
-  //float** MatriceImg1=LoadImagePgm(NAME_IMG_IN1,&length,&width);
-  //float** MatriceImg2=LoadImagePgm(NAME_IMG_IN2,&length,&width);
-  
-  //Should Lecture Image be this? With MatriceImgR1 && MatriceImgR2?
-  MatriceImgR1=LoadImagePgm(NAME_IMG_IN1,&length,&width);
-  MatriceImgR2=LoadImagePgm(NAME_IMG_IN2,&length,&width);
-  
+  float** MatriceImg1=LoadImagePgm(NAME_IMG_IN1,&length,&width);
+  float** MatriceImg2=LoadImagePgm(NAME_IMG_IN2,&length,&width);
 
-  // TO-DO
-  //Initialize matrices to 0
-  //FFTDD for each image
-  //Mod for each matrix
-  //Recal && Mult for each matrix? Not sure about this step but probably
-
-  /*Initialisation à zéros les matrices*/
-  for(i=0;i<length;i++) {
-    for(j=0;j<width;j++) {
-         
-         //Image #1
-         MatriceImgI1[i][j]=0.0;
-         MatriceImgM1[i][j]=0.0;
-         
-         //Image #2
-         MatriceImgI2[i][j]=0.0;
-         MatriceImgM2[i][j]=0.0;
-
-      }
-  }
-
-  /*FFT Image 1 UdM_1*/
-  FFTDD(MatriceImgR1,MatriceImgI1,length,width);
-
-  /*FFT Image 2 UdM_2*/
-  FFTDD(MatriceImgR2,MatriceImgI2,length,width);
-
-  /*Module Image 1 UdM_1*/
-  Mod(MatriceImgM1,MatriceImgR1,MatriceImgI1,length,width);
-
-  /*Module Image 2 UdM_2*/
-  Mod(MatriceImgM2,MatriceImgR2,MatriceImgI2,length,width);
-
-  /*Pour visu Image 1 UdM_1*/
-  Recal(MatriceImgM1,length,width);
-  Mult(MatriceImgM1,100.0,length,width); 
-
-  /*Pour visu Image 2 UdM_2*/
-  Recal(MatriceImgM2,length,width);
-  Mult(MatriceImgM2,100.0,length,width);
-
-  /*Centrer Image 1 UdM_1*/
-  CenterImg(MatriceImgM1,length,width);
-
-  /*Centrer Image 2 UdM_2*/
-  CenterImg(MatriceImgM2,length,width);
-
+ 
   // .... .... .... .... .... .... ....
 
 
   //Sauvegarde
-  //SaveImagePgm(NAME_IMG_OUT1,MatriceImg1,length,width);
-  //SaveImagePgm(NAME_IMG_OUT2,MatriceImg2,length,width);
-
-  
-  //Sauvegarde, should be with MatriceImgM1 && MatriceImgM2?
-  SaveImagePgm(NAME_IMG_OUT1,MatriceImgM1,length,width);
-  SaveImagePgm(NAME_IMG_OUT2,MatriceImgM2,length,width);
-  
+  SaveImagePgm(NAME_IMG_OUT1,MatriceImg1,length,width);
+  SaveImagePgm(NAME_IMG_OUT2,MatriceImg2,length,width);
 
   //Commande systeme: VISU
   strcpy(BufSystVisuImg,NAME_VISUALISER);
@@ -151,9 +94,9 @@ int main(int argc,char **argv)
   free_fmatrix_2d(MatriceImgR3);
   free_fmatrix_2d(MatriceImgI3);
   free_fmatrix_2d(MatriceImgM3);
-  //free_fmatrix_2d(MatriceImg1);
-  //free_fmatrix_2d(MatriceImg2);  
-  //free_fmatrix_2d(MatriceImg3);
+  free_fmatrix_2d(MatriceImg1);
+  free_fmatrix_2d(MatriceImg2);  
+  free_fmatrix_2d(MatriceImg3);
 
   //retour sans probleme
   printf("\n C'est fini ... \n\n");
