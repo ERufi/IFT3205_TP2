@@ -57,20 +57,10 @@ int main(int argc,char **argv)
   float** MatriceImgR3=fmatrix_allocate_2d(length,width);
   float** MatriceImg3=fmatrix_allocate_2d(length,width);
 
-  //Lecture Image 
-  //float** MatriceImg1=LoadImagePgm(NAME_IMG_IN1,&length,&width);
-  //float** MatriceImg2=LoadImagePgm(NAME_IMG_IN2,&length,&width);
-  
-  //Should Lecture Image be this? With MatriceImgR1 && MatriceImgR2?
+  //Lecture Images
   MatriceImgR1=LoadImagePgm(NAME_IMG_IN1,&length,&width);
   MatriceImgR2=LoadImagePgm(NAME_IMG_IN2,&length,&width);
   
-
-  // TO-DO
-  //Initialize matrices to 0
-  //FFTDD for each image
-  //Mod for each matrix
-  //Recal && Mult for each matrix? Not sure about this step but probably
 
   /*Initialisation à zéros les matrices*/
   for(i=0;i<length;i++) {
@@ -114,14 +104,8 @@ int main(int argc,char **argv)
   CenterImg(MatriceImgM2,length,width);
 
   // .... .... .... .... .... .... ....
-
-
-  //Sauvegarde
-  //SaveImagePgm(NAME_IMG_OUT1,MatriceImg1,length,width);
-  //SaveImagePgm(NAME_IMG_OUT2,MatriceImg2,length,width);
-
   
-  //Sauvegarde, should be with MatriceImgM1 && MatriceImgM2?
+  //Sauvegarde images
   SaveImagePgm(NAME_IMG_OUT1,MatriceImgM1,length,width);
   SaveImagePgm(NAME_IMG_OUT2,MatriceImgM2,length,width);
   
