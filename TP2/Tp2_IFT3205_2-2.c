@@ -21,10 +21,8 @@
 /* DEFINITIONS -----------------------------------*/   
 /*------------------------------------------------*/
 #define NAME_VISUALISER "display "
-#define NAME_IMG_IN1  "UdM_1"
-#define NAME_IMG_IN2  "UdM_2"
-#define NAME_IMG_OUT1 "image-Out1"
-#define NAME_IMG_OUT2 "image-Out2"
+#define NAME_IMG_IN1  "lena"
+#define NAME_IMG_OUT1 "image-TpIFT3205-2-2"
 
 /*------------------------------------------------*/
 /* PROTOTYPE DE FONCTIONS  -----------------------*/   
@@ -58,25 +56,66 @@ int main(int argc,char **argv)
   float** MatriceImg3=fmatrix_allocate_2d(length,width);
 
   //Lecture Image 
-  float** MatriceImg1=LoadImagePgm(NAME_IMG_IN1,&length,&width);
-  float** MatriceImg2=LoadImagePgm(NAME_IMG_IN2,&length,&width);
+  MatriceImgR1=LoadImagePgm(NAME_IMG_IN1,&length,&width);
+  //float** MatriceImg2=LoadImagePgm(NAME_IMG_IN2,&length,&width);
 
- 
+ /*Initialisation à zéros les matrices*/
+  for(i=0;i<length;i++) {
+    for(j=0;j<width;j++) {
+         
+         //Image #1
+         MatriceImgI1[i][j]=0.0;
+         MatriceImgM1[i][j]=0.0;
+         
+         //Image #2
+         MatriceImgI2[i][j]=0.0;
+         MatriceImgM2[i][j]=0.0;
+
+      }
+  }
+  
+  /*FFT*/
+  FFTDD(MatriceImgR1,MatriceImgI1,length,width);
+
+  
+
+  /*Module*/
+  Mod(MatriceImgM1,MatriceImgR1,MatriceImgI1,length,width);
+
+  /*Pour visu*/
+  Recal(MatriceImgM1,length,width);
+  Mult(MatriceImgM1,100.0,length,width);
+  
+  	
+  /*Center Image real part*/
+  CenterImg(MatriceImgM1,length,width);
+   /*Center Image imaginary part*/
+  //CenterImg(MatriceImgI1,length,width);
+  
+   /*rotate image real part*/
+  rotate_image(MatriceImgM1, length,width, 22.5);
+  /*rotate image imaginary part*/
+  //rotate_image(MatriceImgI1, length,width, 22.5);
+  
+  
+ /*Center Image real part*/
+  //CenterImg(MatriceImgR1,length,width);
+   /*Center Image imaginary part*/
+  //CenterImg(MatriceImgI1,length,width);
+  
+   /*inverse FFT*/
+  //IFFTDD(MatriceImgR1,MatriceImgI1,length,width) ; 
+  //Recal(MatriceImgR1,length,width);
   // .... .... .... .... .... .... ....
 
 
   //Sauvegarde
-  SaveImagePgm(NAME_IMG_OUT1,MatriceImg1,length,width);
-  SaveImagePgm(NAME_IMG_OUT2,MatriceImg2,length,width);
+  SaveImagePgm(NAME_IMG_OUT1,MatriceImgM1,length,width);
+  //SaveImagePgm(NAME_IMG_OUT2,MatriceImg2,length,width);
 
   //Commande systeme: VISU
   strcpy(BufSystVisuImg,NAME_VISUALISER);
   strcat(BufSystVisuImg,NAME_IMG_OUT1);
-  strcat(BufSystVisuImg,".pgm&");
-  printf(" %s",BufSystVisuImg);
-  system(BufSystVisuImg);
-  strcpy(BufSystVisuImg,NAME_VISUALISER);
-  strcat(BufSystVisuImg,NAME_IMG_OUT2);
   strcat(BufSystVisuImg,".pgm&");
   printf(" %s",BufSystVisuImg);
   system(BufSystVisuImg);
@@ -94,8 +133,8 @@ int main(int argc,char **argv)
   free_fmatrix_2d(MatriceImgR3);
   free_fmatrix_2d(MatriceImgI3);
   free_fmatrix_2d(MatriceImgM3);
-  free_fmatrix_2d(MatriceImg1);
-  free_fmatrix_2d(MatriceImg2);  
+  //free_fmatrix_2d(MatriceImg1);
+  //free_fmatrix_2d(MatriceImg2);  
   free_fmatrix_2d(MatriceImg3);
 
   //retour sans probleme
