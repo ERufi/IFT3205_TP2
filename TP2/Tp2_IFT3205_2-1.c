@@ -90,12 +90,14 @@ int main(int argc,char **argv)
   Mod(MatriceImgM2,MatriceImgR2,MatriceImgI2,length,width);
 
   /*Pour visu Image 1 UdM_1*/
+  Loga(MatriceImgM1,100.0,length,width); 
   Recal(MatriceImgM1,length,width);
-  Mult(MatriceImgM1,100.0,length,width); 
+  //Mult(MatriceImgM2,100.0,length,width);
 
   /*Pour visu Image 2 UdM_2*/
+  Loga(MatriceImgM2,100.0,length,width);
   Recal(MatriceImgM2,length,width);
-  Mult(MatriceImgM2,100.0,length,width);
+  //Mult(MatriceImgM2,100.0,length,width);
 
   /*Centrer Image 1 UdM_1*/
   CenterImg(MatriceImgM1,length,width);
