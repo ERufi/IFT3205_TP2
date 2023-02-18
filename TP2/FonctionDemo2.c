@@ -477,3 +477,112 @@ void CenterImg(float** mat,int lgth,int wdth)
  /*desallocation memoire*/
  free_fmatrix_2d(mattmp);
 }
+/*----------------------------------------------------------*/
+/*  RotateImage                                               */
+/*----------------------------------------------------------*/
+
+void rotate_image_work_in_progress(float** input_image,int length,int width, float angle) {
+	int i, j;
+	float pi = 3.14;
+	float rad = angle * pi/ 180.0; // Convert angle to radians
+	float cos_theta = cos(rad), sin_theta = sin(rad);
+	float center_x = (float) width / 2.0, center_y = (float) length/ 2.0;
+	float ** tempMatR = fmatrix_allocate_2d(length,width);
+	float ** tempMatI = fmatrix_allocate_2d(length,width);
+	int coordX, coordY;
+	
+	//printf("%d finx,%d finy \n",length,width);
+	for(i=0;i<length;i++) {
+	    for(j=0;j<width;j++) {
+		 
+		 //Image #1
+		tempMatR[i][j]= 0.0;
+		tempMatI[i][j]= 0.0 ;
+		//input_image[i][j] = 0.0;
+	      }
+	  }
+	  
+       for (i = 0; i < length; i++) {
+        for (j = 0; j < width; j++) {
+       
+      
+         coordX = cos_theta * (j) + sin_theta * (i);
+         coordY = -sin_theta  * (j) + cos_theta * (i);
+        tempMatR[i][j] =  input_image[coordX][coordY];
+	 
+	}
+	}
+	
+	for(i=0;i<length;i++) {
+	    for(j=0;j<width;j++) {
+		 
+		 //Image #1
+		input_image[i][j] =  tempMatR[i][j];
+		//tempMatI[i][j]= 0.0
+		//input_image[i][j] = 0.0;
+	      }
+	  }
+}
+
+void rotate_image(float** input_image,int length,int width, float angle) {
+    int i, j;
+    float pi = 3.14;
+    float rad = angle * pi/ 180.0; // Convert angle to radians
+    float a = cos(rad), b = sin(rad);
+    float cx = (float) width / 2.0, cy = (float) length/ 2.0;
+
+    // Allocate memory for output image
+    float** tempMat = fmatrix_allocate_2d(length,width);
+	for(i=0;i<length;i++) {
+	    for(j=0;j<width;j++) {
+		 
+		 //Image #1
+		tempMat[i][j]=input_image[i][j];
+		input_image[i][j] = 0.0;
+	      }
+	  }
+	  
+    for (i = 0; i < length; i++) {
+        for (j = 0; j < width; j++) {
+            float x = a * (j - cx) - b * (i - cy) + cx;
+            float y = b * (j - cx) + a * (i - cy) + cy;
+            
+            // Compute coordinates of neighboring pixels
+            int x0 = (int) floor(x), y0 = (int) floor(y);
+            int x1 = x0 + 1, y1 = y0 + 1;
+
+            // Compute interpolation weights
+            float wx1 = x - x0, wx0 = 1 - wx1;
+            float wy1 = y - y0, wy0 = 1 - wy1;
+            
+           // Handle edge cases where the indices are out of bounds
+            if (x0 < 0 || x1 >= width || y0 < 0 || y1 >=length) {
+                input_image[i][j] = 0.0;
+                continue;
+            }
+	  float interpolated_value = wx0 * wy0 * tempMat[y0][x0]
+                                      + wx1 * wy0 * tempMat[y0][x1]
+                                      + wx0 * wy1 * tempMat[y1][x0]
+                                      + wx1 * wy1 * tempMat[y1][x1];
+                                      
+             input_image[i][j] = interpolated_value;
+             
+             
+             
+        }
+    }
+    
+
+}
+
+void Loga(float** mat,float coef,int lgth,int wdth)
+{
+ int i,j;
+
+ /*logarithme*/
+  for(i=0;i<lgth;i++) for(j=0;j<wdth;j++) 
+    {
+     mat[i][j] =  log(1+mat[i][j]);
+      if (mat[i][j]>GREY_LEVEL) mat[i][j]=GREY_LEVEL; 
+      }
+}
