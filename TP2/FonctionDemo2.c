@@ -486,9 +486,9 @@ void CenterImg(float** mat,int lgth,int wdth)
 void rotate_image(float** input_image,int length,int width, float angle) {
 	int i, j;
 	float pi = 3.14;
-	float rad = angle * pi/ 180.0;
+	float rad = -angle * pi/ 180.0;
 	float cos_theta = cos(rad), sin_theta = sin(rad);
-	float center_x = (float) width / 2.0, center_y = (float) length/ 2.0;
+	float center_x = width / 2.0, center_y = length/ 2.0;
 	float ** tempMatR = fmatrix_allocate_2d(length,width);
 	float ** tempMatI = fmatrix_allocate_2d(length,width);
 	float coordX, coordY;
@@ -509,8 +509,8 @@ void rotate_image(float** input_image,int length,int width, float angle) {
         for (j = 0; j < width; j++) {
        
       
-         coordX = cos_theta * (j-center_x) - sin_theta * (i-center_y) + center_x;
-         coordY = sin_theta  * (j-center_x) + cos_theta * (i-center_y)+ center_y;
+         coordX = cos_theta * (j-center_x) + sin_theta * (i-center_y) + center_x;
+         coordY = -sin_theta  * (j-center_x) + cos_theta * (i-center_y)+ center_y;
         
          if(floor(coordX) == floor(coordX+0.5)){
          	icoordX = floor(coordX);
@@ -547,7 +547,7 @@ void rotate_image(float** input_image,int length,int width, float angle) {
 
 void rotate_image_by_angle(float** input_image,float** input_image2,int length,int width,float found_angle) {
   	int i, j;
-  	
+  	float center_x = width / 2.0, center_y = length/ 2.0;
 	float pi = 3.14;
 	float increment = 0.005;
 	//float rad = -angle * pi/ 180.0;
@@ -580,16 +580,17 @@ void rotate_image_by_angle(float** input_image,float** input_image2,int length,i
 		 input_image[i][j] = MatriceImgMG[i][j];
       			}
   		}
-		rotate_image(input_image, length,width, i);
+		rotate_image(input_image, length,width, degree);
 		int error = 0.0;
 		 for(int u=0;u<length;u++) {
+
 	    		for(int v=0;v<width;v++) {
 		 
-		int amplitudeG = sqrt(MatriceImgMG[u][v]*MatriceImgMG[u][v]+MatriceImgI[u][v]*MatriceImgI[u][v]) ;
-		int amplitudeF = sqrt(input_image2[u][v]*input_image2[u][v]+MatriceImgI2[u][v]*MatriceImgI2[u][v]) ;
+			int amplitudeG = sqrt(input_image[u][v]*input_image[u][v]+MatriceImgI[u][v]*MatriceImgI[u][v]) ;
+			int amplitudeF = sqrt(input_image2[u][v]*input_image2[u][v]+MatriceImgI2[u][v]*MatriceImgI2[u][v]) ;
 			
 			error+= amplitudeG - amplitudeF ;
-			//printf("[%f :: %lf ]",input_image[u][v],amplitudeF);
+			
 	      		}
   		}
   		
