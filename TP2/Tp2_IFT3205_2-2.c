@@ -1,6 +1,6 @@
 /*------------------------------------------------------*/
 /* Prog    : Tp2_IFT3205-2-2.c                          */
-/* Auteur  : Émilie Rufiange 208376                     */
+/* Auteur  : Émilie Rufiange 208376 , Aleck Tardelli Gibbs 20096971 */
 /* Date    : --/--/2010                                 */
 /* version :                                            */ 
 /* langage : C                                          */
@@ -74,38 +74,11 @@ int main(int argc,char **argv)
       }
   }
   
-  /*FFT*/
-  //FFTDD(MatriceImgR1,MatriceImgI1,length,width);
 
-  
-
-  /*Module*/
-  //Mod(MatriceImgM1,MatriceImgR1,MatriceImgI1,length,width);
-
-  /*Pour visu*/
-  //Recal(MatriceImgM1,length,width);
-  //Mult(MatriceImgM1,100.0,length,width);
-  
-  	
-  /*Center Image real part*/
-  //CenterImg(MatriceImgR1,length,width);
-   /*Center Image imaginary part*/
-  //CenterImg(MatriceImgI1,length,width);
   
    /*rotate image real part*/
-  rotate_image(MatriceImgR1, length,width, 22.5);
-  /*rotate image imaginary part*/
-  //rotate_image(MatriceImgI1, length,width, -22.5);
-  
-  
- /*Center Image real part*/
-  //CenterImg(MatriceImgR1,length,width);
-   /*Center Image imaginary part*/
-  //CenterImg(MatriceImgI1,length,width);
-  
-   /*inverse FFT*/
-  //IFFTDD(MatriceImgR1,MatriceImgI1,length,width) ; 
-  //Recal(MatriceImgR1,length,width);
+  rotate_image(MatriceImgR1, length,width, -22.5); // car axe y est inverser
+
   // .... .... .... .... .... .... ....
 
 

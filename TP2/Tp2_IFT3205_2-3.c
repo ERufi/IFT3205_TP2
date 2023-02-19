@@ -1,6 +1,6 @@
 /*------------------------------------------------------*/
-/* Prog    : Tp2_IFT3205-2-1.c                          */
-/* Auteur  : Émilie Rufiange 208376                     */
+/* Prog    : Tp2_IFT3205-2-3.c                          */
+/* Auteur  : Émilie Rufiange 208376 , Aleck Tardelli Gibbs 20096971 */
 /* Date    : --/--/2010                                 */
 /* version :                                            */ 
 /* langage : C                                          */
@@ -109,7 +109,7 @@ int main(int argc,char **argv)
   
   //Sauvegarde images
   //SaveImagePgm(NAME_IMG_OUT1,MatriceImgM1,length,width);
-  SaveImagePgm(NAME_IMG_OUT2,MatriceImgM2,length,width);
+  //SaveImagePgm(NAME_IMG_OUT2,MatriceImgM2,length,width);
   
 
   //Commande systeme: VISU

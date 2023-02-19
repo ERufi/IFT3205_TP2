@@ -1,6 +1,6 @@
 /*------------------------------------------------------*/
-/* Prog    : Tp2_IFT3205-2-1.c                          */
-/* Auteur  : Émilie Rufiange 208376                     */
+/* Prog    : Tp2_IFT3205-2-4.c                          */
+/* Auteur  : Émilie Rufiange 208376 , Aleck Tardelli Gibbs 20096971 */
 /* Date    : --/--/2010                                 */
 /* version :                                            */ 
 /* langage : C                                          */
@@ -24,7 +24,7 @@
 #define NAME_IMG_IN1  "UdM_1"
 #define NAME_IMG_IN2  "UdM_2"
 #define NAME_IMG_OUT1 "image-Out24a"
-#define NAME_IMG_OUT2 "image-Out24b"
+#define NAME_IMG_OUT2 "image-TpIFT3205-2-4"
 
 /*------------------------------------------------*/
 /* PROTOTYPE DE FONCTIONS  -----------------------*/   
@@ -76,7 +76,8 @@ int main(int argc,char **argv)
 
       }
   }
-  rotate_image_by_angle(MatriceImgM2,MatriceImgM1,length,width,angle);
+  angle = rotate_image_by_angle(MatriceImgM2,MatriceImgM1,length,width,angle);
+  printf("\n Angle2 >>> %.3f angle ",angle);
   rotate_image(MatriceImgR2, length,width, angle);
   //rotate_image(MatriceImgR2, length,width, 0.051350 * 180/3.14);
   // .... .... .... .... .... .... ....

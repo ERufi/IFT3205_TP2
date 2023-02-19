@@ -1,6 +1,6 @@
 /*------------------------------------------------------*/
 /* Prog    : Tp2_IFT3205-2-1.c                          */
-/* Auteur  : Émilie Rufiange 208376                     */
+/* Auteur  : Émilie Rufiange 208376 , Aleck Tardelli Gibbs 20096971 */
 /* Date    : --/--/2010                                 */
 /* version :                                            */ 
 /* langage : C                                          */

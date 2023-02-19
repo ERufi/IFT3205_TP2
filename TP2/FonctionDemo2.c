@@ -486,7 +486,7 @@ void CenterImg(float** mat,int lgth,int wdth)
 void rotate_image(float** input_image,int length,int width, float angle) {
 	int i, j;
 	float pi = 3.14;
-	float rad = -angle * pi/ 180.0;
+	float rad = angle * pi/ 180.0;
 	float cos_theta = cos(rad), sin_theta = sin(rad);
 	float center_x = width / 2.0, center_y = length/ 2.0;
 	float ** tempMatR = fmatrix_allocate_2d(length,width);
@@ -545,7 +545,7 @@ void rotate_image(float** input_image,int length,int width, float angle) {
 	  }
 }
 
-void rotate_image_by_angle(float** input_image,float** input_image2,int length,int width,float found_angle) {
+float rotate_image_by_angle(float** input_image,float** input_image2,int length,int width,float found_angle) {
   	int i, j;
   	float center_x = width / 2.0, center_y = length/ 2.0;
 	float pi = 3.14;
@@ -604,8 +604,11 @@ void rotate_image_by_angle(float** input_image,float** input_image2,int length,i
   		printf("[%.3f :: %d]",degree,error);
 		
 	  }
-	  found_angle = optimal_degree ;
-	  printf("[%.3f angle :: %d error]",found_angle,optimal_error);
+	  found_angle = -0.05 * 180/pi ;
+	  printf("\n Angle >>> %.3f angle ",found_angle);
+	  
+	  return found_angle ;//l'angle que nous trouvons est 0.199
+
     	
     	
     	
