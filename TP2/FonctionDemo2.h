@@ -59,5 +59,10 @@ void    MultMatrix(float**,float**,float**,float**,float**,float**,int,int);
 void    SquareMatrix(float**,float**,float**,float**,int,int);
 void    CenterImg_(float**,int,int);
 void    CenterImg(float**,int,int);
+void  	rotate_image(float**, int, int, float );
+void 	Loga(float**,float,int,int);
+void	rotate_image_by_angle(float**, float**,int, int,float);
+void 	calculate_estimation(float** ,float** ,float** , int ,int);
 
+void 	Find_dirac(float**,int,int,int ,int);
 #endif

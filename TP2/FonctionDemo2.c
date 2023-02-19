@@ -477,6 +477,8 @@ void CenterImg(float** mat,int lgth,int wdth)
  /*desallocation memoire*/
  free_fmatrix_2d(mattmp);
 }
+
+
 /*----------------------------------------------------------*/
 /*  RotateImage                                               */
 /*----------------------------------------------------------*/
@@ -507,8 +509,8 @@ void rotate_image(float** input_image,int length,int width, float angle) {
         for (j = 0; j < width; j++) {
        
       
-         coordX = cos_theta * (j-center_x) + sin_theta * (i-center_y) + center_x;
-         coordY = -sin_theta  * (j-center_x) + cos_theta * (i-center_y)+ center_y;
+         coordX = cos_theta * (j-center_x) - sin_theta * (i-center_y) + center_x;
+         coordY = sin_theta  * (j-center_x) + cos_theta * (i-center_y)+ center_y;
         
          if(floor(coordX) == floor(coordX+0.5)){
          	icoordX = floor(coordX);
@@ -543,6 +545,122 @@ void rotate_image(float** input_image,int length,int width, float angle) {
 	  }
 }
 
+void rotate_image_by_angle(float** input_image,float** input_image2,int length,int width,float found_angle) {
+  	int i, j;
+  	
+	float pi = 3.14;
+	float increment = 0.005;
+	//float rad = -angle * pi/ 180.0;
+	//angle = 180.0/pi*rad
+	float** MatriceImgI=fmatrix_allocate_2d(length,width);
+	float** MatriceImgM=fmatrix_allocate_2d(length,width); 
+	float** MatriceImgI2=fmatrix_allocate_2d(length,width);
+	float** MatriceImgM2=fmatrix_allocate_2d(length,width); 
+	float** MatriceImgMG=fmatrix_allocate_2d(length,width); 
+	 for(i=0;i<length;i++) {
+    		for(j=0;j<width;j++) {
+         
+		 //Image #1
+		 MatriceImgI[i][j]=0.0;
+		 MatriceImgM[i][j]=0.0;
+		  MatriceImgI2[i][j]=0.0;
+		 MatriceImgM2[i][j]=0.0;
+		 MatriceImgMG[i][j] = input_image[i][j];
+      		}
+  	}
+  	//FFTDD(input_image2,MatriceImgI2,length,width);
+  	int optimal_error = -1; 
+  	float optimal_degree = -1.0;
+  	
+  	
+	for( float degree=-pi/16;degree < pi/16+increment;degree+= increment ) {
+		//MatriceImgMG = input_image;
+		for(i=0;i<length;i++) {
+    		for(j=0;j<width;j++) {
+		 input_image[i][j] = MatriceImgMG[i][j];
+      			}
+  		}
+		rotate_image(input_image, length,width, i);
+		int error = 0.0;
+		 for(int u=0;u<length;u++) {
+	    		for(int v=0;v<width;v++) {
+		 
+		int amplitudeG = sqrt(MatriceImgMG[u][v]*MatriceImgMG[u][v]+MatriceImgI[u][v]*MatriceImgI[u][v]) ;
+		int amplitudeF = sqrt(input_image2[u][v]*input_image2[u][v]+MatriceImgI2[u][v]*MatriceImgI2[u][v]) ;
+			
+			error+= amplitudeG - amplitudeF ;
+			//printf("[%f :: %lf ]",input_image[u][v],amplitudeF);
+	      		}
+  		}
+  		
+  		if(optimal_error == -1){
+  		optimal_error = error;
+  		optimal_degree = degree;
+  		}else if (optimal_error > error){
+  			optimal_error = error;
+  			optimal_degree = degree;
+  		}
+  		printf("[%.3f :: %d]",degree,error);
+		
+	  }
+	  found_angle = optimal_degree ;
+	  printf("[%.3f angle :: %d error]",found_angle,optimal_error);
+    	
+    	
+    	
+
+}
+
+void calculate_estimation(float** input_image,float** input_image2,float** input_image1, int length,int width) {
+  	int i, j;
+  	
+    	float** MatriceImgI=fmatrix_allocate_2d(length,width);
+	float** MatriceImgM=fmatrix_allocate_2d(length,width); 
+	float** MatriceImgI1=fmatrix_allocate_2d(length,width);
+	float** MatriceImgM2=fmatrix_allocate_2d(length,width); 
+	float** MatriceImg=fmatrix_allocate_2d(length,width); 
+	
+	 for(i=0;i<length;i++) {
+    		for(j=0;j<width;j++) {
+         
+		 //Image #1
+		 MatriceImg[i][j] = 0.0;
+		 MatriceImgI[i][j]=0.0;
+		 MatriceImgM[i][j]=0.0;
+		 MatriceImgI1[i][j]=0.0;
+		 MatriceImgM2[i][j]=0.0;
+		 
+		 float calculate_estimation_num = input_image[i][j] * input_image2[i][j] ;
+		 float calculate_estimation_denom= sqrt(input_image1[i][j]*input_image1[i][j]+MatriceImgI1[i][j]*MatriceImgI1[i][j]);
+		 MatriceImg[i][j] = calculate_estimation_num /(calculate_estimation_denom*calculate_estimation_denom);
+      		}
+  	}
+      
+    	
+	 for(i=0;i<length;i++) {
+    		for(j=0;j<width;j++) {
+         
+		input_image2[i][j] = MatriceImg[i][j];
+      		}
+  	}
+
+}
+void Find_dirac(float** mat,int lgth,int wdth,int line ,int col)
+{
+ int i,j;
+
+  	for(i=0;i<lgth;i++) {
+    		for(j=0;j<wdth;j++) {
+         	
+         	if (mat[i][j] != 0)
+		col = j;
+		line = i;
+      		}
+  	}
+  	
+  	 printf("[line = %d :: colonne = %d ]",line,col);
+  	
+}
 
 void Loga(float** mat,float coef,int lgth,int wdth)
 {
@@ -555,3 +673,11 @@ void Loga(float** mat,float coef,int lgth,int wdth)
       if (mat[i][j]>GREY_LEVEL) mat[i][j]=GREY_LEVEL; 
       }
 }
+
+
+
+
+
+
+
+
