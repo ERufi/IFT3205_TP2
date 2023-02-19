@@ -75,25 +75,25 @@ int main(int argc,char **argv)
   }
   
   /*FFT*/
-  FFTDD(MatriceImgR1,MatriceImgI1,length,width);
+ // FFTDD(MatriceImgR1,MatriceImgI1,length,width);
 
   
 
   /*Module*/
-  Mod(MatriceImgM1,MatriceImgR1,MatriceImgI1,length,width);
+ // Mod(MatriceImgM1,MatriceImgR1,MatriceImgI1,length,width);
 
   /*Pour visu*/
-  Recal(MatriceImgM1,length,width);
-  Mult(MatriceImgM1,100.0,length,width);
+ // Recal(MatriceImgM1,length,width);
+ // Mult(MatriceImgM1,100.0,length,width);
   
   	
   /*Center Image real part*/
-  CenterImg(MatriceImgM1,length,width);
+  //CenterImg(MatriceImgM1,length,width);
    /*Center Image imaginary part*/
   //CenterImg(MatriceImgI1,length,width);
   
    /*rotate image real part*/
-  rotate_image(MatriceImgM1, length,width, 22.5);
+  rotate_image(MatriceImgR1, length,width, 22.5);
   /*rotate image imaginary part*/
   //rotate_image(MatriceImgI1, length,width, 22.5);
   
@@ -110,7 +110,7 @@ int main(int argc,char **argv)
 
 
   //Sauvegarde
-  SaveImagePgm(NAME_IMG_OUT1,MatriceImgM1,length,width);
+  SaveImagePgm(NAME_IMG_OUT1,MatriceImgR1,length,width);
   //SaveImagePgm(NAME_IMG_OUT2,MatriceImg2,length,width);
 
   //Commande systeme: VISU
